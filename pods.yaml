@@ -21,4 +21,4 @@ spec:
   volumes:
    - name: maven-cache
      persistentVolumeClaim:
-       claimName: myclaim
+        claimName: myclaim
