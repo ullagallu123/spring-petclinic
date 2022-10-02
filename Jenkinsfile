@@ -27,7 +27,7 @@ pipeline {
     stage('sonar-testing'){
       steps{
         container('sonarcli'){
-          withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonarserver') { 
+          withSonarQubeEnv(credentialsId: 'siva', installationName: 'sonarserver') { 
             sh '''/opt/sonar-scanner/bin/sonar-scanner \
              -Dsonar.projectKey=petclinic \
              -Dsonar.projectName=petclinic \
