@@ -22,8 +22,7 @@ pipeline {
     stage('Build Maven'){
       steps{
         container('maven'){
-             sh 'mvn -DskipTests=true clean package'
-           //sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+           sh 'mvn -Dmaven.test.failure.ignore=true clean package'
         }  
       }
       post{
