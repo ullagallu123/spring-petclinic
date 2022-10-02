@@ -35,7 +35,7 @@ pipeline {
         }
       } 
     }
-    stage('sonar-testing'){
+    stage('sonar-analysis'){
       steps{
         container('sonarcli'){
           withSonarQubeEnv(credentialsId: 'siva', installationName: 'sonarserver') { 
@@ -55,11 +55,7 @@ pipeline {
       }
     } 
     stage('publish artifact to nexus'){
-      when{
-        expression{
-          false
-        }
-      }
+      
       steps{
         container('jnlp'){
           script {
