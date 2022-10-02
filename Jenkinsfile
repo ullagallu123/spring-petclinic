@@ -32,7 +32,19 @@ pipeline {
     stage('sonar-testing'){
       steps{
         container('sonarcli'){
-            sh 'which sonar-scanner'
+          withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonarserver') { 
+            sh '''/opt/sonar-scanner/bin/sonar-scanner \
+             -Dsonar.projectKey=petclinic \
+             -Dsonar.projectName=petclinic \
+             -Dsonar.projectVersion=1.0 \
+             -Dsonar.sources=src/main \
+             -Dsonar.tests=src/test \
+             -Dsonar.java.binaries=target/classes  \
+             -Dsonar.language=java \
+             -Dsonar.sourceEncoding=UTF-8 \
+             -Dsonar.java.libraries=target/classes
+            '''
+          }
         }
       }
     } 
