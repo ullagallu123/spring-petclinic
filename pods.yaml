@@ -18,6 +18,11 @@ spec:
      command:
      - cat
      tty: true
+   - name: sonarcli
+     image: sonarsource/sonar-scanner-cli
+     command:
+     - cat
+     tty: true
   volumes:
    - name: maven-cache
      persistentVolumeClaim:
