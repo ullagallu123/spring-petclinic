@@ -23,7 +23,18 @@ spec:
      command:
      - cat
      tty: true
+   - name: dockercli
+     image: docker:latest
+     command:
+     - cat
+     tty: true
+     volumeMounts:
+     - name: docker-sock
+       mountPath: /var/run/docker.sock
   volumes:
    - name: maven-cache
      persistentVolumeClaim:
        claimName: myclaim
+   - name: docker-sock
+     hostPath: 
+       path: /var/run/docker.sock

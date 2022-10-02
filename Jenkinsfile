@@ -10,6 +10,10 @@ pipeline {
     NEXUS_URL = "139.59.108.217:32363"
     NEXUS_REPOSITORY= "maven-hosted"
     NEXUS_CREDENTIAL_ID = "nexus-cred"
+    DOCKERHUB_USERNAME = "siva9666"
+    APP_NAME = "petclinic"
+    IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
+    IMAGE_TAG = "${BUILD_NUMBER}"
   }
   stages{
     stage('Checkout from SCM'){
@@ -86,6 +90,21 @@ pipeline {
                  error "*** File: ${artifactPath}, could not be found";
               }
           }
+        }
+      }
+    }
+    stage("DockerImage-build"){
+      steps{
+        container('dockercli'){
+          sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+          sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
+          withCredentials([usernamePassword(credentialsId: 'dockerlogin', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+           sh "docker login -u $USER -p $PASS"
+           sh "docker push $IMAGE_NAME:$IMAGE_TAG"
+           sh "docker push $IMAGE_NAME:latest"
+          }
+          sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
+          sh "docker rmi $IMAGE_NAME:latest"
         }
       }
     }
