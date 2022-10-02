@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: petclinic
-        image: kunchalavikram/spring-petclinic:latest
+        image: siva9666/petclinic:latest
         ports:
         - containerPort: 8080
 ---

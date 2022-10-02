@@ -23,6 +23,11 @@ spec:
      command:
      - cat
      tty: true
+   - name: kubectl
+     image: siva9666/kubectl:latest
+     command:
+     - cat
+     tty: true
    - name: dockercli
      image: docker:latest
      command:
