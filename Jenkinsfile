@@ -24,6 +24,11 @@ pipeline {
       }
     }
     stage('Build Maven'){
+      when{
+        expression{
+          false
+        }
+      }
       steps{
         container('maven'){
            sh 'mvn -Dmaven.test.failure.ignore=true clean package'
@@ -36,6 +41,11 @@ pipeline {
       } 
     }
     stage('sonar-analysis'){
+      when{
+        expression{
+          false
+        }
+      }
       steps{
         container('sonarcli'){
           withSonarQubeEnv(credentialsId: 'siva', installationName: 'sonarserver') { 
@@ -55,7 +65,11 @@ pipeline {
       }
     } 
     stage('publish artifact to nexus'){
-      
+      when{
+        expression{
+          false
+        }
+      }
       steps{
         container('jnlp'){
           script {
@@ -95,6 +109,11 @@ pipeline {
       }
     }
     stage("DockerImage-build"){
+      when{
+        expression{
+          false
+        }
+      }
       steps{
         container('dockercli'){
           sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
