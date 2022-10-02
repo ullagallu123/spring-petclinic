@@ -29,6 +29,7 @@ pipeline {
         container('sonarcli'){
             sh 'which sonar-scanner'
         }
-    }
+      }
+    } 
   }
 }
