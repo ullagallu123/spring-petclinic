@@ -103,10 +103,10 @@ pipeline {
         container('dockercli'){
           sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
           sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
-          withCredentials([usernamePassword(credentialsId: 'cont', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-           sh "docker login -u $USER -p $PASS"
-           sh "docker push $IMAGE_NAME:$IMAGE_TAG"
-           sh "docker push $IMAGE_NAME:latest"
+          withCredentials([usernamePassword(credentialsId: 'cont-cred', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+             sh "docker login -u $USER -p $PASS"
+             sh "docker push $IMAGE_NAME:$IMAGE_TAG"
+             sh "docker push $IMAGE_NAME:latest"
           }
           sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
           sh "docker rmi $IMAGE_NAME:latest"
