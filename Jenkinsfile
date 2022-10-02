@@ -55,6 +55,11 @@ pipeline {
       }
     } 
     stage('publish artifact to nexus'){
+      when{
+        expression{
+          false
+        }
+      }
       steps{
         container('jnlp'){
           script {
@@ -98,7 +103,7 @@ pipeline {
         container('dockercli'){
           sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
           sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
-          withCredentials([usernamePassword(credentialsId: 'dockerlogin', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+          withCredentials([usernamePassword(credentialsId: 'cont', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
            sh "docker login -u $USER -p $PASS"
            sh "docker push $IMAGE_NAME:$IMAGE_TAG"
            sh "docker push $IMAGE_NAME:latest"
