@@ -13,11 +13,6 @@ pipeline {
       }
     }
     stage('Build Maven'){
-      when{
-        expression{
-          false
-        }
-      }
       steps{
         container('maven'){
            sh 'mvn -Dmaven.test.failure.ignore=true clean package'
